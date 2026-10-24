@@ -1,6 +1,6 @@
 # Campusly: Campus Cafeteria & Events App
 
-A Flutter mobile app that shows the daily cafeteria menu and upcoming campus events in one place, with reminders for events students want to attend.
+A Flutter mobile app that shows the daily cafeteria menu and upcoming campus events in one place, with reminders for events students want to attend. Clubs can log in and post their own events.
 
 ## Description
 
@@ -12,6 +12,8 @@ Students currently check several websites, posters, and social media accounts to
 - Filter events by category
 - Favorite / "I'm going" events
 - Reminder notification before a saved event
+- Club login (Firebase Authentication)
+- Add event form with input validation (for logged-in clubs)
 
 ## Group Details
 
@@ -28,4 +30,5 @@ Students currently check several websites, posters, and social media accounts to
 
 - Flutter (Dart)
 - Firebase Firestore (menu and event data)
+- Firebase Authentication (club accounts)
 - Local storage for favorites and reminders
