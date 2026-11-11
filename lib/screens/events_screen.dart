@@ -176,6 +176,13 @@ class _EventsScreenState extends State<EventsScreen> {
                                 ),
                               ),
 
+                              const SizedBox(height: 8),
+
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: _EventUrgencyBadge(event: event),
+                              ),
+
                               const SizedBox(height: 5),
 
                               Text(event.location),
@@ -212,6 +219,63 @@ class _EventsScreenState extends State<EventsScreen> {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _EventUrgencyBadge extends StatelessWidget {
+  const _EventUrgencyBadge({required this.event});
+
+  final Event event;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+
+    String label;
+    Color background;
+    Color textColor;
+
+    if (!now.isBefore(event.endAt)) {
+      label = 'Ended';
+      background = const Color(0xFFECECEC);
+      textColor = const Color(0xFF666666);
+    } else if (!now.isBefore(event.startAt)) {
+      label = 'Happening now';
+      background = const Color(0xFFFCE8E6);
+      textColor = const Color(0xFFA52D29);
+    } else {
+      final timeLeft = event.startAt.difference(now);
+
+      if (timeLeft <= const Duration(hours: 24)) {
+        label = 'Within 24 hours';
+        background = const Color(0xFFFCE8E6);
+        textColor = const Color(0xFFA52D29);
+      } else if (timeLeft <= const Duration(hours: 72)) {
+        label = 'Within 3 days';
+        background = const Color(0xFFFFF2D9);
+        textColor = const Color(0xFF995F13);
+      } else {
+        label = 'Coming up';
+        background = const Color(0xFFE5EBDD);
+        textColor = const Color(0xFF244D43);
+      }
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }
