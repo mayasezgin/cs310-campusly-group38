@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/event.dart';
 import '../state/saved_events.dart';
+import 'event_details_screen.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({
@@ -153,6 +154,17 @@ class _EventsScreenState extends State<EventsScreen> {
                       elevation: 0,
                       margin: const EdgeInsets.only(bottom: 10),
                       child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventDetailsScreen(
+                                event: event,
+                                savedEvents: widget.savedEvents,
+                              ),
+                            ),
+                          );
+                        },
                         title: Text(
                           event.title,
                           style: const TextStyle(
