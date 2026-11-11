@@ -36,4 +36,46 @@ void main() {
       expectVisibleScreen(label);
     }
   });
+
+  testWidgets('Saved cards and Events bookmarks share state', (tester) async {
+    await tester.pumpWidget(const CampuslyApp());
+
+    Future<void> openTab(String label) async {
+      await tester.tap(find.widgetWithText(NavigationDestination, label));
+      await tester.pumpAndSettle();
+    }
+
+    const title = 'Study Skills Workshop';
+    final save = find.byTooltip('Save $title');
+    final unsave = find.byTooltip('Unsave $title');
+    final explore = find.widgetWithText(FilledButton, 'Explore Events');
+    final savedCard = find.widgetWithText(Card, title);
+
+    await openTab('Saved');
+    await tester.tap(explore);
+    await tester.pumpAndSettle();
+    expect(find.byType(EventsScreen), findsOneWidget);
+    expect(
+      tester.widget<NavigationBar>(find.byType(NavigationBar)).selectedIndex,
+      2,
+    );
+
+    await tester.tap(save);
+    await tester.pumpAndSettle();
+    expect(unsave, findsOneWidget);
+
+    await openTab('Saved');
+    expect(savedCard, findsOneWidget);
+    await tester.tap(
+      find.descendant(of: savedCard, matching: find.text('Remove')),
+    );
+    await tester.pumpAndSettle();
+    expect(savedCard, findsNothing);
+    expect(explore, findsOneWidget);
+
+    await tester.tap(explore);
+    await tester.pumpAndSettle();
+    expect(save, findsOneWidget);
+    expect(unsave, findsNothing);
+  });
 }
