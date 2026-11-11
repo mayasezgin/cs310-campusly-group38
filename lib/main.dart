@@ -58,7 +58,7 @@ class _CampuslyNavigationState extends State<_CampuslyNavigation> {
         child: IndexedStack(
           index: _selectedIndex,
           children: [
-            const HomeScreen(),
+            HomeScreen(onTabSelected: _selectTab),
             const MenuScreen(),
             EventsScreen(events: _events, savedEvents: _savedEvents),
             SavedScreen(
