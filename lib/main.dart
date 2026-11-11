@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'data/sample_events.dart';
+import 'routes/club_routes.dart';
 import 'screens/events_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/menu_screen.dart';
@@ -16,7 +17,11 @@ class CampuslyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Campusly', home: _CampuslyNavigation());
+    return MaterialApp(
+      title: 'Campusly',
+      home: const _CampuslyNavigation(),
+      routes: clubRoutes,
+    );
   }
 }
 
