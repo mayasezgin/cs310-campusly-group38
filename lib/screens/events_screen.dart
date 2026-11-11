@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../models/event.dart';
@@ -37,12 +36,10 @@ class _EventsScreenState extends State<EventsScreen> {
           event.organizerName.toLowerCase().contains(query);
 
       final matchesCategory =
-          selectedCategory == null ||
-          event.category == selectedCategory;
+          selectedCategory == null || event.category == selectedCategory;
 
       return matchesSearch && matchesCategory;
-    }).toList()
-      ..sort((a, b) => a.startAt.compareTo(b.startAt));
+    }).toList()..sort((a, b) => a.startAt.compareTo(b.startAt));
 
     return ColoredBox(
       color: cream,
@@ -107,8 +104,7 @@ class _EventsScreenState extends State<EventsScreen> {
               for (final category in EventCategory.values)
                 ChoiceChip(
                   label: Text(
-                    category.name[0].toUpperCase() +
-                        category.name.substring(1),
+                    category.name[0].toUpperCase() + category.name.substring(1),
                   ),
                   selected: selectedCategory == category,
                   selectedColor: lightGreen,
@@ -164,11 +160,33 @@ class _EventsScreenState extends State<EventsScreen> {
                             color: primaryGreen,
                           ),
                         ),
-                        subtitle: Text(
-                          '${event.location}\n'
-                          '${event.organizerName}',
+
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${event.startAt.day}/${event.startAt.month}/${event.startAt.year} '
+                                '• ${event.startAt.hour.toString().padLeft(2, '0')}:'
+                                '${event.startAt.minute.toString().padLeft(2, '0')}',
+                                style: const TextStyle(
+                                  color: Color(0xFF244D43),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+
+                              const SizedBox(height: 5),
+
+                              Text(event.location),
+
+                              const SizedBox(height: 3),
+
+                              Text('Organized by ${event.organizerName}'),
+                            ],
+                          ),
                         ),
-                        isThreeLine: true,
+
                         trailing: IconButton(
                           tooltip: widget.savedEvents.isSaved(event.id)
                               ? 'Remove saved event'
