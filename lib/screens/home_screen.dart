@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import '../data/sample_events.dart';
+import '../widgets/event_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -121,6 +123,26 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(color: primaryGreen),
                   ),
                 ],
+              ),
+            ),
+              // Upcoming Events section
+            const SizedBox(height: 28),
+
+            const Text(
+              'Upcoming Events',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: primaryGreen,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+          ...sampleEvents().take(2).map(
+              (event) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: EventCard(event: event),
               ),
             ),
           ],
