@@ -4,7 +4,12 @@ import '../data/sample_events.dart';
 import '../widgets/event_card.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+    this.onTabSelected,
+  });
+
+  final ValueChanged<int>? onTabSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +92,43 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 28),
 
+
+            // Home Screen shortcuts
+            
+            // Home Screen shortcuts
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _HomeShortcut(
+                  icon: Icons.restaurant_menu,
+                  label: 'Menu',
+                  onTap: () => onTabSelected?.call(1),
+                ),
+                _HomeShortcut(
+                  icon: Icons.event_outlined,
+                  label: 'Events',
+                  onTap: () => onTabSelected?.call(2),
+                ),
+                const _HomeShortcut(
+                  icon: Icons.groups_outlined,
+                  label: 'Clubs',
+                ),
+                _HomeShortcut(
+                  icon: Icons.bookmark_outline,
+                  label: 'Saved',
+                  onTap: () => onTabSelected?.call(3),
+                ),
+                const _HomeShortcut(
+                  icon: Icons.login,
+                  label: 'Login',
+                ),
+              ],
+            ),
+
+
+            const SizedBox(height: 28),
+
+            
             // Cafeteria section
             const Text(
               "Today's Cafeteria Menu",
@@ -151,3 +193,52 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+class _HomeShortcut extends StatelessWidget {
+  const _HomeShortcut({
+    required this.icon,
+    required this.label,
+    this.onTap
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    const primaryGreen = Color(0xFF244D43);
+    const lightGreen = Color(0xFFE5EBDD);
+
+    return InkWell(
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(12),
+    child: Column(
+      children: [
+        Container(
+          width: 46,
+          height: 46,
+          decoration: BoxDecoration(
+            color: lightGreen,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            color: primaryGreen,
+            size: 23,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: const TextStyle(
+            color: primaryGreen,
+            fontSize: 11,
+          ),
+        ),
+      ],
+     ),
+    );
+  }
+}
+
