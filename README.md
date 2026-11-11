@@ -32,3 +32,15 @@ Students currently check several websites, posters, and social media accounts to
 - Firebase Firestore (menu and event data)
 - Firebase Authentication (club accounts)
 - Local storage for favorites and reminders
+
+## Getting Started
+
+This project was set up with Flutter 3.41.2 (stable).
+
+With an Android or iOS device, emulator, or simulator available, run these
+commands from the repository root:
+
+```sh
+flutter pub get
+flutter run
+```
