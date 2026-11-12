@@ -5,10 +5,16 @@ import '../state/saved_events.dart';
 import 'event_details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key, this.onTabSelected, required this.savedEvents});
+  const HomeScreen({
+    super.key,
+    this.onTabSelected,
+    required this.savedEvents,
+    this.onSearchSubmitted,
+  });
 
   final ValueChanged<int>? onTabSelected;
   final SavedEvents savedEvents;
+  final ValueChanged<String>? onSearchSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +83,10 @@ class HomeScreen extends StatelessWidget {
 
             // Search field
             TextField(
+              textInputAction: TextInputAction.search,
+              onSubmitted: (value) {
+                onSearchSubmitted?.call(value);
+              },
               decoration: InputDecoration(
                 hintText: 'Search campus events...',
                 prefixIcon: const Icon(Icons.search),

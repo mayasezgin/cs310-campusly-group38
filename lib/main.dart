@@ -38,6 +38,16 @@ class _CampuslyNavigationState extends State<_CampuslyNavigation> {
   final _events = sampleEvents();
   final _savedEvents = SavedEvents();
   int _selectedIndex = 0;
+  String _homeSearchQuery = '';
+  int _searchRequestId = 0;
+
+  void _searchFromHome(String query) {
+    setState(() {
+      _homeSearchQuery = query;
+      _searchRequestId++;
+      _selectedIndex = _eventsTabIndex;
+    });
+  }
 
   @override
   void dispose() {
@@ -58,9 +68,17 @@ class _CampuslyNavigationState extends State<_CampuslyNavigation> {
         child: IndexedStack(
           index: _selectedIndex,
           children: [
-            HomeScreen(onTabSelected: _selectTab, savedEvents: _savedEvents),
+            HomeScreen(
+              onTabSelected: _selectTab,
+              savedEvents: _savedEvents,
+              onSearchSubmitted: _searchFromHome,
+            ),
             const MenuScreen(),
-            EventsScreen(events: _events, savedEvents: _savedEvents),
+            EventsScreen(
+              events: _events,
+              savedEvents: _savedEvents,
+              homeSearchQuery: _homeSearchQuery,
+              searchRequestId: _searchRequestId,),
             SavedScreen(
               events: _events,
               savedEvents: _savedEvents,

@@ -9,10 +9,14 @@ class EventsScreen extends StatefulWidget {
     super.key,
     required this.events,
     required this.savedEvents,
+    this.homeSearchQuery = '',
+    this.searchRequestId = 0,
   });
 
   final List<Event> events;
   final SavedEvents savedEvents;
+  final String homeSearchQuery;
+  final int searchRequestId;
 
   @override
   State<EventsScreen> createState() => _EventsScreenState();
@@ -21,6 +25,32 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   String searchQuery = '';
   EventCategory? selectedCategory;
+
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchQuery = widget.homeSearchQuery;
+    _searchController = TextEditingController(text: searchQuery);
+  }
+
+  @override
+  void didUpdateWidget(covariant EventsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.searchRequestId != oldWidget.searchRequestId) {
+      searchQuery = widget.homeSearchQuery;
+      selectedCategory = null;
+      _searchController.text = searchQuery;
+    }
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   static const primaryGreen = Color(0xFF244D43);
   static const cream = Color(0xFFF7F7F0);
@@ -67,6 +97,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
           // Event search bar
           TextField(
+            controller: _searchController,
             onChanged: (value) {
               setState(() {
                 searchQuery = value;
