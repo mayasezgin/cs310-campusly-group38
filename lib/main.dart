@@ -8,6 +8,10 @@ import 'screens/menu_screen.dart';
 import 'screens/saved_screen.dart';
 import 'state/saved_events.dart';
 
+const campusGreen = Color(0xFF244D43);
+const campusCream = Color(0xFFF7F7F0);
+const campusLightGreen = Color(0xFFE5EBDD);
+
 void main() {
   runApp(const CampuslyApp());
 }
@@ -19,6 +23,39 @@ class CampuslyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Campusly',
+      debugShowCheckedModeBanner: false,
+
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: campusCream,
+
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: campusGreen,
+          surface: campusCream,
+        ),
+
+        appBarTheme: const AppBarTheme(
+          backgroundColor: campusCream,
+          foregroundColor: campusGreen,
+          elevation: 0,
+        ),
+
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: campusCream,
+          indicatorColor: campusLightGreen,
+          labelTextStyle: WidgetStateProperty.all(
+            const TextStyle(
+              color: campusGreen,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          iconTheme: WidgetStateProperty.all(
+            const IconThemeData(color: campusGreen),
+          ),
+        ),
+      ),
+
       home: const _CampuslyNavigation(),
       routes: clubRoutes,
     );
@@ -78,7 +115,8 @@ class _CampuslyNavigationState extends State<_CampuslyNavigation> {
               events: _events,
               savedEvents: _savedEvents,
               homeSearchQuery: _homeSearchQuery,
-              searchRequestId: _searchRequestId,),
+              searchRequestId: _searchRequestId,
+            ),
             SavedScreen(
               events: _events,
               savedEvents: _savedEvents,
