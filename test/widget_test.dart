@@ -46,10 +46,19 @@ void main() {
     }
 
     const title = 'Study Skills Workshop';
-    final save = find.byTooltip('Save $title');
-    final unsave = find.byTooltip('Unsave $title');
-    final explore = find.widgetWithText(FilledButton, 'Explore Events');
+    // Every Events card uses the same bookmark tooltip, so look inside the
+    // Study Skills Workshop card. Only the visible tab is searched, so this
+    // finds the Events card there and the Saved card on the Saved tab.
     final savedCard = find.widgetWithText(Card, title);
+    final save = find.descendant(
+      of: savedCard,
+      matching: find.byTooltip('Save event'),
+    );
+    final unsave = find.descendant(
+      of: savedCard,
+      matching: find.byTooltip('Remove saved event'),
+    );
+    final explore = find.widgetWithText(FilledButton, 'Explore Events');
 
     await openTab('Saved');
     await tester.tap(explore);
