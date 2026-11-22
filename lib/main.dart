@@ -7,7 +7,14 @@ import 'screens/home_screen.dart';
 import 'screens/menu_screen.dart';
 import 'screens/saved_screen.dart';
 import 'state/saved_events.dart';
+import 'theme/campusly_style.dart';
 import 'theme/app_theme.dart';
+
+const campusGreen = CampuslyColors.green;
+const campusCream = CampuslyColors.cream;
+const campusLightGreen = CampuslyColors.lightGreen;
+
+
 
 void main() {
   runApp(const CampuslyApp());
@@ -20,6 +27,40 @@ class CampuslyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Campusly',
+      debugShowCheckedModeBanner: false,
+
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: campusCream,
+
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: campusGreen,
+          surface: campusCream,
+        ),
+
+        appBarTheme: const AppBarTheme(
+          backgroundColor: campusCream,
+          foregroundColor: campusGreen,
+          elevation: 0,
+        ),
+
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: campusCream,
+          indicatorColor: campusLightGreen,
+          labelTextStyle: WidgetStateProperty.all(
+            const TextStyle(
+              color: campusGreen,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          iconTheme: WidgetStateProperty.all(
+            const IconThemeData(color: campusGreen),
+          ),
+        ),
+      ),
+
       home: const _CampuslyNavigation(),
       routes: clubRoutes,
       // Applies the shared colors and custom font to every screen.
@@ -42,6 +83,16 @@ class _CampuslyNavigationState extends State<_CampuslyNavigation> {
   final _events = sampleEvents();
   final _savedEvents = SavedEvents();
   int _selectedIndex = 0;
+  String _homeSearchQuery = '';
+  int _searchRequestId = 0;
+
+  void _searchFromHome(String query) {
+    setState(() {
+      _homeSearchQuery = query;
+      _searchRequestId++;
+      _selectedIndex = _eventsTabIndex;
+    });
+  }
 
   @override
   void dispose() {
@@ -62,9 +113,18 @@ class _CampuslyNavigationState extends State<_CampuslyNavigation> {
         child: IndexedStack(
           index: _selectedIndex,
           children: [
-            HomeScreen(onTabSelected: _selectTab),
+            HomeScreen(
+              onTabSelected: _selectTab,
+              savedEvents: _savedEvents,
+              onSearchSubmitted: _searchFromHome,
+            ),
             const MenuScreen(),
-            EventsScreen(events: _events, savedEvents: _savedEvents),
+            EventsScreen(
+              events: _events,
+              savedEvents: _savedEvents,
+              homeSearchQuery: _homeSearchQuery,
+              searchRequestId: _searchRequestId,
+            ),
             SavedScreen(
               events: _events,
               savedEvents: _savedEvents,

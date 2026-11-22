@@ -1,21 +1,28 @@
-
 import 'package:flutter/material.dart';
 import '../data/sample_events.dart';
 import '../widgets/event_card.dart';
+import '../state/saved_events.dart';
+import 'event_details_screen.dart';
+import 'club/club_login_screen.dart';
+import '../theme/campusly_style.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
     super.key,
     this.onTabSelected,
+    required this.savedEvents,
+    this.onSearchSubmitted,
   });
 
   final ValueChanged<int>? onTabSelected;
+  final SavedEvents savedEvents;
+  final ValueChanged<String>? onSearchSubmitted;
 
   @override
   Widget build(BuildContext context) {
-    const primaryGreen = Color(0xFF244D43);
-    const backgroundCream = Color(0xFFF7F7F0);
-    const lightGreen = Color(0xFFE5EBDD);
+    const primaryGreen = CampuslyColors.green;
+    const backgroundCream = CampuslyColors.cream;
+    const lightGreen = CampuslyColors.lightGreen;
 
     return Container(
       color: backgroundCream,
@@ -78,6 +85,10 @@ class HomeScreen extends StatelessWidget {
 
             // Search field
             TextField(
+              textInputAction: TextInputAction.search,
+              onSubmitted: (value) {
+                onSearchSubmitted?.call(value);
+              },
               decoration: InputDecoration(
                 hintText: 'Search campus events...',
                 prefixIcon: const Icon(Icons.search),
@@ -92,9 +103,6 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 28),
 
-
-            // Home Screen shortcuts
-            
             // Home Screen shortcuts
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,26 +117,33 @@ class HomeScreen extends StatelessWidget {
                   label: 'Events',
                   onTap: () => onTabSelected?.call(2),
                 ),
-                const _HomeShortcut(
+
+                _HomeShortcut(
                   icon: Icons.groups_outlined,
                   label: 'Clubs',
+                  onTap: () {
+                    Navigator.pushNamed(context, ClubLoginScreen.routeName);
+                  },
                 ),
+
                 _HomeShortcut(
                   icon: Icons.bookmark_outline,
                   label: 'Saved',
                   onTap: () => onTabSelected?.call(3),
                 ),
-                const _HomeShortcut(
+
+                _HomeShortcut(
                   icon: Icons.login,
                   label: 'Login',
+                  onTap: () {
+                    Navigator.pushNamed(context, ClubLoginScreen.routeName);
+                  },
                 ),
               ],
             ),
 
-
             const SizedBox(height: 28),
 
-            
             // Cafeteria section
             const Text(
               "Today's Cafeteria Menu",
@@ -136,6 +151,19 @@ class HomeScreen extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: primaryGreen,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                'assets/images/cafeteria.png',
+                width: double.infinity,
+                height: 230,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
               ),
             ),
 
@@ -167,7 +195,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-              // Upcoming Events section
+            // Upcoming Events section
             const SizedBox(height: 28),
 
             const Text(
@@ -181,12 +209,28 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-          ...sampleEvents().take(2).map(
-              (event) => Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: EventCard(event: event),
-              ),
-            ),
+            ...sampleEvents()
+                .take(2)
+                .map(
+                  (event) => Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (context) => EventDetailsScreen(
+                              event: event,
+                              savedEvents: savedEvents,
+                            ),
+                          ),
+                        );
+                      },
+                      child: EventCard(event: event),
+                    ),
+                  ),
+                ),
           ],
         ),
       ),
@@ -195,11 +239,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HomeShortcut extends StatelessWidget {
-  const _HomeShortcut({
-    required this.icon,
-    required this.label,
-    this.onTap
-  });
+  const _HomeShortcut({required this.icon, required this.label, this.onTap});
 
   final IconData icon;
   final String label;
@@ -211,34 +251,26 @@ class _HomeShortcut extends StatelessWidget {
     const lightGreen = Color(0xFFE5EBDD);
 
     return InkWell(
-    onTap: onTap,
-    borderRadius: BorderRadius.circular(12),
-    child: Column(
-      children: [
-        Container(
-          width: 46,
-          height: 46,
-          decoration: BoxDecoration(
-            color: lightGreen,
-            borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Column(
+        children: [
+          Container(
+            width: 46,
+            height: 46,
+            decoration: BoxDecoration(
+              color: lightGreen,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: primaryGreen, size: 23),
           ),
-          child: Icon(
-            icon,
-            color: primaryGreen,
-            size: 23,
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: const TextStyle(color: primaryGreen, fontSize: 11),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: const TextStyle(
-            color: primaryGreen,
-            fontSize: 11,
-          ),
-        ),
-      ],
-     ),
+        ],
+      ),
     );
   }
 }
-

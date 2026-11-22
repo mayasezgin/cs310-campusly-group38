@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import '../models/event.dart';
 import '../state/saved_events.dart';
 import 'event_details_screen.dart';
+import '../theme/campusly_style.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({
     super.key,
     required this.events,
     required this.savedEvents,
+    this.homeSearchQuery = '',
+    this.searchRequestId = 0,
   });
 
   final List<Event> events;
   final SavedEvents savedEvents;
+  final String homeSearchQuery;
+  final int searchRequestId;
 
   @override
   State<EventsScreen> createState() => _EventsScreenState();
@@ -22,9 +27,35 @@ class _EventsScreenState extends State<EventsScreen> {
   String searchQuery = '';
   EventCategory? selectedCategory;
 
-  static const primaryGreen = Color(0xFF244D43);
-  static const cream = Color(0xFFF7F7F0);
-  static const lightGreen = Color(0xFFE5EBDD);
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchQuery = widget.homeSearchQuery;
+    _searchController = TextEditingController(text: searchQuery);
+  }
+
+  @override
+  void didUpdateWidget(covariant EventsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.searchRequestId != oldWidget.searchRequestId) {
+      searchQuery = widget.homeSearchQuery;
+      selectedCategory = null;
+      _searchController.text = searchQuery;
+    }
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  static const primaryGreen = CampuslyColors.green;
+  static const cream = CampuslyColors.cream;
+  static const lightGreen = CampuslyColors.lightGreen;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +98,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
           // Event search bar
           TextField(
+            controller: _searchController,
             onChanged: (value) {
               setState(() {
                 searchQuery = value;
@@ -208,8 +240,9 @@ class _EventsScreenState extends State<EventsScreen> {
 
                         trailing: IconButton(
                           tooltip: widget.savedEvents.isSaved(event.id)
-                              ? 'Remove saved event'
-                              : 'Save event',
+                              ? 'Unsave ${event.title}'
+                              : 'Save ${event.title}',
+
                           icon: Icon(
                             widget.savedEvents.isSaved(event.id)
                                 ? Icons.bookmark
