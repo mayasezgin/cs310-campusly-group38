@@ -50,14 +50,13 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+flutter:
   uses-material-design: true
+
   assets:
-   - assets/images/cafeteria.png
+    - assets/images/cafeteria.png
+
   fonts:
     - family: Poppins
       fonts:
@@ -65,7 +64,6 @@ flutter:
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
 
-  fonts:
     - family: WorkSans
       fonts:
         - asset: assets/fonts/WorkSans-Regular.ttf
