@@ -4,6 +4,7 @@ import '../widgets/event_card.dart';
 import '../state/saved_events.dart';
 import 'event_details_screen.dart';
 import 'club/club_login_screen.dart';
+import '../theme/campusly_style.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -19,9 +20,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryGreen = Color(0xFF244D43);
-    const backgroundCream = Color(0xFFF7F7F0);
-    const lightGreen = Color(0xFFE5EBDD);
+    const primaryGreen = CampuslyColors.green;
+    const backgroundCream = CampuslyColors.cream;
+    const lightGreen = CampuslyColors.lightGreen;
 
     return Container(
       color: backgroundCream,

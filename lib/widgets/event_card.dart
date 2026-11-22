@@ -1,21 +1,17 @@
-
 import 'package:flutter/material.dart';
 import '../models/event.dart';
+import '../theme/campusly_style.dart';
 
 class EventCard extends StatelessWidget {
-  const EventCard({
-    super.key,
-    required this.event,
-    this.onTap,
-  });
+  const EventCard({super.key, required this.event, this.onTap});
 
   final Event event;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    const primaryGreen = Color(0xFF244D43);
-    const lightGreen = Color(0xFFE5EBDD);
+    const primaryGreen = CampuslyColors.green;
+    const lightGreen = CampuslyColors.lightGreen;
 
     final date =
         '${event.startAt.day.toString().padLeft(2, '0')}/'
@@ -25,9 +21,7 @@ class EventCard extends StatelessWidget {
       color: Colors.white,
       elevation: 0,
       margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
@@ -72,18 +66,12 @@ class EventCard extends StatelessWidget {
                       event.location,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),
               ),
-              const Icon(
-                Icons.chevron_right,
-                color: primaryGreen,
-              ),
+              const Icon(Icons.chevron_right, color: primaryGreen),
             ],
           ),
         ),

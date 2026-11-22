@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/event.dart';
 import '../state/saved_events.dart';
 import 'event_details_screen.dart';
+import '../theme/campusly_style.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({
@@ -52,9 +53,9 @@ class _EventsScreenState extends State<EventsScreen> {
     super.dispose();
   }
 
-  static const primaryGreen = Color(0xFF244D43);
-  static const cream = Color(0xFFF7F7F0);
-  static const lightGreen = Color(0xFFE5EBDD);
+  static const primaryGreen = CampuslyColors.green;
+  static const cream = CampuslyColors.cream;
+  static const lightGreen = CampuslyColors.lightGreen;
 
   @override
   Widget build(BuildContext context) {
@@ -239,8 +240,9 @@ class _EventsScreenState extends State<EventsScreen> {
 
                         trailing: IconButton(
                           tooltip: widget.savedEvents.isSaved(event.id)
-                              ? 'Remove saved event'
-                              : 'Save event',
+                              ? 'Unsave ${event.title}'
+                              : 'Save ${event.title}',
+
                           icon: Icon(
                             widget.savedEvents.isSaved(event.id)
                                 ? Icons.bookmark

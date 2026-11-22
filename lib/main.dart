@@ -7,10 +7,12 @@ import 'screens/home_screen.dart';
 import 'screens/menu_screen.dart';
 import 'screens/saved_screen.dart';
 import 'state/saved_events.dart';
+import 'theme/campusly_style.dart';
 
-const campusGreen = Color(0xFF244D43);
-const campusCream = Color(0xFFF7F7F0);
-const campusLightGreen = Color(0xFFE5EBDD);
+const campusGreen = CampuslyColors.green;
+const campusCream = CampuslyColors.cream;
+const campusLightGreen = CampuslyColors.lightGreen;
+
 
 void main() {
   runApp(const CampuslyApp());

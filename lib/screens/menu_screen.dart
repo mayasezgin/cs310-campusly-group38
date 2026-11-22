@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../data/sample_menus.dart';
 import '../models/menu.dart';
+import '../theme/campusly_style.dart';
 
-const forestGreen = Color(0xFF244D43);
-const cream = Color(0xFFF7F7F0);
-const lightGreen = Color(0xFFE5EBDD);
+const forestGreen = CampuslyColors.green;
+const cream = CampuslyColors.cream;
+const lightGreen = CampuslyColors.lightGreen;
+
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../models/event.dart';
 import '../state/saved_events.dart';
+import '../theme/campusly_style.dart';
+
 
 class EventDetailsScreen extends StatelessWidget {
   const EventDetailsScreen({
@@ -13,8 +15,8 @@ class EventDetailsScreen extends StatelessWidget {
   final Event event;
   final SavedEvents savedEvents;
 
-  static const green = Color(0xFF244D43);
-  static const cream = Color(0xFFF7F7F0);
+  static const green = CampuslyColors.green;
+  static const cream = CampuslyColors.cream;
 
   String formatDateTime(DateTime date) {
     String two(int number) => number.toString().padLeft(2, '0');
