@@ -3,6 +3,7 @@ import '../data/sample_events.dart';
 import '../widgets/event_card.dart';
 import '../state/saved_events.dart';
 import 'event_details_screen.dart';
+import 'club/club_login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -115,16 +116,28 @@ class HomeScreen extends StatelessWidget {
                   label: 'Events',
                   onTap: () => onTabSelected?.call(2),
                 ),
-                const _HomeShortcut(
+
+                _HomeShortcut(
                   icon: Icons.groups_outlined,
                   label: 'Clubs',
+                  onTap: () {
+                    Navigator.pushNamed(context, ClubLoginScreen.routeName);
+                  },
                 ),
+
                 _HomeShortcut(
                   icon: Icons.bookmark_outline,
                   label: 'Saved',
                   onTap: () => onTabSelected?.call(3),
                 ),
-                const _HomeShortcut(icon: Icons.login, label: 'Login'),
+
+                _HomeShortcut(
+                  icon: Icons.login,
+                  label: 'Login',
+                  onTap: () {
+                    Navigator.pushNamed(context, ClubLoginScreen.routeName);
+                  },
+                ),
               ],
             ),
 
