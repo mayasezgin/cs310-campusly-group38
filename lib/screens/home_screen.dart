@@ -155,6 +155,19 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 12),
 
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                'assets/images/cafeteria.png',
+                width: double.infinity,
+                height: 230,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
