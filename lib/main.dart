@@ -27,6 +27,7 @@ class CampuslyApp extends StatelessWidget {
 
       theme: ThemeData(
         useMaterial3: true,
+        fontFamily: 'Poppins',
         scaffoldBackgroundColor: campusCream,
 
         colorScheme: ColorScheme.fromSeed(
