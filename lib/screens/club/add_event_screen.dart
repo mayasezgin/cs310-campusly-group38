@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../data/sample_club_events.dart';
 import '../../models/event.dart';
+import '../../theme/app_spacing.dart';
+import '../../theme/app_text_styles.dart';
 import '../../utils/date_labels.dart';
 import '../../utils/event_category_labels.dart';
 import '../../utils/validators.dart';
@@ -152,8 +154,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(title: const Text('Create New Event')),
       body: SafeArea(
@@ -164,15 +164,20 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 key: _formKey,
                 child: Scrollbar(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.xl,
+                      AppSpacing.sm,
+                      AppSpacing.xl,
+                      AppSpacing.lg,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
                           'All fields are required.',
-                          style: textTheme.bodySmall,
+                          style: AppTextStyles.caption(context),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.lg),
                         LabeledTextField(
                           label: 'Event Title',
                           controller: _titleController,
@@ -208,7 +213,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 validator: _validateStart,
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            const SizedBox(width: AppSpacing.md),
                             Expanded(
                               child: LabeledTextField(
                                 label: 'End Time',
@@ -273,7 +278,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.xl,
+                AppSpacing.sm,
+                AppSpacing.xl,
+                AppSpacing.lg,
+              ),
               child: PrimaryButton(label: 'Publish Event', onPressed: _publish),
             ),
           ],

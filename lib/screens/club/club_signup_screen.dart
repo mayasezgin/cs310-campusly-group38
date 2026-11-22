@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_spacing.dart';
+import '../../theme/app_text_styles.dart';
 import '../../utils/validators.dart';
 import '../../widgets/confirmation_dialog.dart';
 import '../../widgets/form/labeled_text_field.dart';
@@ -54,31 +56,30 @@ class _ClubSignUpScreenState extends State<ClubSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Club Login'), centerTitle: false),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.xl,
+            AppSpacing.sm,
+            AppSpacing.xl,
+            AppSpacing.xl,
+          ),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Club Sign Up',
-                  style: textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
+                Text('Club Sign Up', style: AppTextStyles.screenTitle(context)),
+                const SizedBox(height: AppSpacing.xs),
                 Text(
                   'Register your club to publish campus events',
-                  style: textTheme.bodyMedium,
+                  style: AppTextStyles.body(context),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.xl),
                 LabeledTextField(
                   label: 'Club Name',
                   controller: _clubNameController,
@@ -114,10 +115,10 @@ class _ClubSignUpScreenState extends State<ClubSignUpScreen> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: colors.secondaryContainer,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(AppRadius.md),
                   ),
                   child: Row(
                     children: [
@@ -125,20 +126,20 @@ class _ClubSignUpScreenState extends State<ClubSignUpScreen> {
                         Icons.verified_user_outlined,
                         color: colors.onSecondaryContainer,
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: AppSpacing.md),
                       Expanded(
                         child: Text(
                           'Club accounts require approval before they can '
                           'publish events.',
-                          style: textTheme.bodySmall,
+                          style: AppTextStyles.caption(context),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.xl),
                 PrimaryButton(label: 'Sign Up', onPressed: _signUp),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Wrap(
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,

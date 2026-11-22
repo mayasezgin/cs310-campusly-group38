@@ -8,10 +8,12 @@ import 'screens/menu_screen.dart';
 import 'screens/saved_screen.dart';
 import 'state/saved_events.dart';
 import 'theme/campusly_style.dart';
+import 'theme/app_theme.dart';
 
 const campusGreen = CampuslyColors.green;
 const campusCream = CampuslyColors.cream;
 const campusLightGreen = CampuslyColors.lightGreen;
+
 
 
 void main() {
@@ -61,6 +63,9 @@ class CampuslyApp extends StatelessWidget {
 
       home: const _CampuslyNavigation(),
       routes: clubRoutes,
+      // Applies the shared colors and custom font to every screen.
+      builder: (context, child) =>
+          Theme(data: campuslyTheme(Theme.of(context)), child: child!),
     );
   }
 }

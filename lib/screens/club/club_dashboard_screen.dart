@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../data/sample_club_events.dart';
 import '../../models/event.dart';
+import '../../theme/app_spacing.dart';
+import '../../theme/app_text_styles.dart';
 import '../../utils/date_labels.dart';
 import '../../utils/event_category_labels.dart';
 import '../../widgets/club_event_card.dart';
@@ -59,7 +61,6 @@ class _ClubDashboardScreenState extends State<ClubDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
     final count = _events.length;
 
@@ -71,62 +72,66 @@ class _ClubDashboardScreenState extends State<ClubDashboardScreen> {
               child: CustomScrollView(
                 slivers: [
                   SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.xl,
+                      AppSpacing.xl,
+                      AppSpacing.xl,
+                      0,
+                    ),
                     sliver: SliverList.list(
                       children: [
                         Text(
                           'Club Dashboard',
-                          style: textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppTextStyles.screenTitle(context),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: AppSpacing.xs),
                         Text(
                           'Campusly · Club account',
-                          style: textTheme.bodySmall,
+                          style: AppTextStyles.caption(context),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: AppSpacing.xl),
                         Container(
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(AppSpacing.lg),
                           decoration: BoxDecoration(
                             color: colors.secondaryContainer,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(AppRadius.md),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Welcome back,', style: textTheme.bodySmall),
-                              const SizedBox(height: 4),
+                              Text(
+                                'Welcome back,',
+                                style: AppTextStyles.caption(context),
+                              ),
+                              const SizedBox(height: AppSpacing.xs),
                               Text(
                                 sampleClubName,
-                                style: textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: AppTextStyles.sectionTitle(context),
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: AppSpacing.xs),
                               Text(
                                 'Bring your campus community together.',
-                                style: textTheme.bodySmall,
+                                style: AppTextStyles.caption(context),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: AppSpacing.xl),
                         Row(
                           children: [
                             Expanded(
                               child: Text(
                                 'Your Posted Events',
-                                style: textTheme.titleLarge,
+                                style: AppTextStyles.sectionTitle(context),
                               ),
                             ),
                             Text(
                               '$count ${count == 1 ? 'event' : 'events'}',
-                              style: textTheme.bodySmall,
+                              style: AppTextStyles.caption(context),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                       ],
                     ),
                   ),
@@ -137,7 +142,9 @@ class _ClubDashboardScreenState extends State<ClubDashboardScreen> {
                     )
                   else
                     SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.xl,
+                      ),
                       sliver: SliverList.builder(
                         itemCount: _events.length,
                         itemBuilder: (context, index) => ClubEventCard(
@@ -150,7 +157,12 @@ class _ClubDashboardScreenState extends State<ClubDashboardScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.xl,
+                AppSpacing.sm,
+                AppSpacing.xl,
+                AppSpacing.sm,
+              ),
               child: Column(
                 children: [
                   PrimaryButton(
@@ -180,24 +192,20 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(AppSpacing.xl),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.event_note_outlined, size: 64, color: colors.primary),
-          const SizedBox(height: 16),
-          Text(
-            'No events yet',
-            style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.lg),
+          Text('No events yet', style: AppTextStyles.cardTitle(context)),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             'Your club has not published any events. '
             'Create your first event to reach students on campus.',
-            style: textTheme.bodyMedium,
+            style: AppTextStyles.body(context),
             textAlign: TextAlign.center,
           ),
         ],
@@ -213,21 +221,20 @@ class _EventPreviewSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.xl,
+          0,
+          AppSpacing.xl,
+          AppSpacing.xl,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              event.title,
-              style: textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
+            Text(event.title, style: AppTextStyles.sectionTitle(context)),
+            const SizedBox(height: AppSpacing.md),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.calendar_today_outlined),
@@ -243,8 +250,8 @@ class _EventPreviewSheet extends StatelessWidget {
               leading: const Icon(Icons.category_outlined),
               title: Text(categoryLabel(event.category)),
             ),
-            const SizedBox(height: 8),
-            Text(event.description, style: textTheme.bodyMedium),
+            const SizedBox(height: AppSpacing.sm),
+            Text(event.description, style: AppTextStyles.body(context)),
           ],
         ),
       ),

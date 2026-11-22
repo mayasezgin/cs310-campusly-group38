@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_spacing.dart';
+import '../../theme/app_text_styles.dart';
 import '../../utils/validators.dart';
 import '../../widgets/form/labeled_text_field.dart';
 import '../../widgets/form/password_field.dart';
@@ -46,14 +48,18 @@ class _ClubLoginScreenState extends State<ClubLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Home'), centerTitle: false),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.xl,
+            AppSpacing.sm,
+            AppSpacing.xl,
+            AppSpacing.xl,
+          ),
           child: Form(
             key: _formKey,
             child: AutofillGroup(
@@ -62,25 +68,22 @@ class _ClubLoginScreenState extends State<ClubLoginScreen> {
                 children: [
                   Text(
                     'Campusly',
-                    style: textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: colors.primary,
-                    ),
+                    style: AppTextStyles.screenTitle(
+                      context,
+                    )?.copyWith(color: colors.primary),
                   ),
-                  Text('Your campus, connected.', style: textTheme.bodySmall),
-                  const SizedBox(height: 32),
                   Text(
-                    'Club Login',
-                    style: textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    'Your campus, connected.',
+                    style: AppTextStyles.caption(context),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xxl),
+                  Text('Club Login', style: AppTextStyles.screenTitle(context)),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     'Manage your campus events',
-                    style: textTheme.bodyMedium,
+                    style: AppTextStyles.body(context),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   LabeledTextField(
                     label: 'Email',
                     controller: _emailController,
@@ -96,9 +99,9 @@ class _ClubLoginScreenState extends State<ClubLoginScreen> {
                     textInputAction: TextInputAction.done,
                     validator: Validators.password,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   PrimaryButton(label: 'Log In', onPressed: _logIn),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Wrap(
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
@@ -112,7 +115,7 @@ class _ClubLoginScreenState extends State<ClubLoginScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   const _InfoBox(
                     title: 'For authorized student clubs',
                     message:
@@ -138,30 +141,24 @@ class _InfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: colors.secondaryContainer,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(Icons.info_outline, color: colors.onSecondaryContainer),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(message, style: textTheme.bodySmall),
+                Text(title, style: AppTextStyles.boxTitle(context)),
+                const SizedBox(height: AppSpacing.xs),
+                Text(message, style: AppTextStyles.caption(context)),
               ],
             ),
           ),
