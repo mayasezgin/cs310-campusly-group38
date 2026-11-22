@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../models/event.dart';
@@ -61,16 +60,20 @@ class EventDetailsScreen extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              Container(
-                height: 150,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE5EBDD),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Icon(
-                  Icons.event,
-                  size: 60,
-                  color: green,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.network(
+                  'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200',
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 200,
+                      color: const Color(0xFFE5EBDD),
+                      child: const Icon(Icons.event, size: 60, color: green),
+                    );
+                  },
                 ),
               ),
 
@@ -146,11 +149,7 @@ class EventDetailsScreen extends StatelessWidget {
                     savedEvents.save(event.id);
                   }
                 },
-                icon: Icon(
-                  isSaved
-                      ? Icons.bookmark
-                      : Icons.bookmark_outline,
-                ),
+                icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_outline),
                 label: Text(
                   isSaved ? 'Remove Saved Event' : "I'm Going / Save Event",
                 ),
@@ -204,16 +203,11 @@ class _DetailRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  label,
-                  style: const TextStyle(color: Colors.black54),
-                ),
+                Text(label, style: const TextStyle(color: Colors.black54)),
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
