@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/event.dart';
+import '../theme/app_spacing.dart';
+import '../theme/app_text_styles.dart';
 import '../utils/date_labels.dart';
 
 /// Compact card for an event on the Club Dashboard: title, date/time and
@@ -13,21 +15,20 @@ class ClubEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 
     Widget infoRow(IconData icon, String text) => Padding(
-      padding: const EdgeInsets.only(top: 6),
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: Row(
         children: [
           Icon(icon, size: 16, color: colors.onSurfaceVariant),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
               text,
-              style: textTheme.bodySmall?.copyWith(
-                color: colors.onSurfaceVariant,
-              ),
+              style: AppTextStyles.caption(
+                context,
+              )?.copyWith(color: colors.onSurfaceVariant),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -36,9 +37,9 @@ class ClubEventCard extends StatelessWidget {
     );
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         side: BorderSide(color: colors.outlineVariant),
       ),
       elevation: 0,
@@ -46,16 +47,11 @@ class ClubEventCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                event.title,
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text(event.title, style: AppTextStyles.cardTitle(context)),
               infoRow(
                 Icons.calendar_today_outlined,
                 eventTimeRangeLabel(event.startAt, event.endAt),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_spacing.dart';
+import '../theme/app_text_styles.dart';
+
 /// Full-width filled button used for the main action of a screen.
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -17,8 +20,10 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = FilledButton.styleFrom(
       minimumSize: const Size.fromHeight(52),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
+      textStyle: AppTextStyles.button,
     );
 
     if (icon == null) {

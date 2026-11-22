@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_spacing.dart';
+import '../../theme/app_text_styles.dart';
+
 /// A text input with a label above it, matching the Campusly form design.
 ///
 /// Used by the club login, sign-up and add event forms so that every field
@@ -69,17 +72,12 @@ class FieldLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: Theme.of(
-              context,
-            ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
+          Text(label, style: AppTextStyles.fieldLabel(context)),
+          const SizedBox(height: AppSpacing.sm),
           child,
         ],
       ),
@@ -96,7 +94,7 @@ InputDecoration campuslyInputDecoration(
   final colors = Theme.of(context).colorScheme;
   OutlineInputBorder border(Color color, [double width = 1]) =>
       OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         borderSide: BorderSide(color: color, width: width),
       );
 
@@ -105,7 +103,10 @@ InputDecoration campuslyInputDecoration(
     suffixIcon: suffixIcon,
     filled: true,
     fillColor: colors.surface,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+    contentPadding: const EdgeInsets.symmetric(
+      horizontal: AppSpacing.md,
+      vertical: AppSpacing.md,
+    ),
     border: border(colors.outlineVariant),
     enabledBorder: border(colors.outlineVariant),
     focusedBorder: border(colors.primary, 1.5),
